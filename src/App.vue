@@ -1,26 +1,46 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div>
+    <!-- <Draggable></Draggable>
+    <BackTop></BackTop>
+    <Copy></Copy>
+    <Debounce></Debounce> -->
+    <!-- <Throttle></Throttle> -->
+    <!-- <HidePop></HidePop>  -->
+
+    <!-- <UseList></UseList>
+    <UseFullScreen></UseFullScreen>
+    <UseDownloadFile></UseDownloadFile> -->
+  </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
 
+<script>
+// directives
+//  import BackTop from "./components/directives/backTop.vue";
+// import Copy from "./components/directives/copy.vue";
+// import Draggable from "./components/directives/draggable.vue";
+// import Debounce from "./components/directives/debounce.vue";
+// import Throttle from "./components/directives/throttle.vue";
+// import HidePop from "./components/directives/hidePop.vue";
+//hooks
+// import UseList from "./components/hooks/useList.vue";
+// import UseFullScreen from "./components/hooks/useFullScreen.vue";
+import UseDownloadFile from "./components/hooks/useDownloadFile.vue";
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    HelloWorld
-  }
-}
+    //   Copy,
+    // BackTop,
+    // Draggable,
+    // Debounce,
+    // Throttle,
+    // HidePop,
+    // UseList,
+    // UseFullScreen,
+    UseDownloadFile,
+  },
+};
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 </style>
