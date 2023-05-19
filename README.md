@@ -4,8 +4,8 @@
 
 ### 使用方法
 
-```
-htmlCopy Code<el-button v-backtop="100">返回顶部</el-button>
+```html
+<el-button v-backtop="100">返回顶部</el-button>
 ```
 
 ### 使用说明
@@ -24,8 +24,8 @@ htmlCopy Code<el-button v-backtop="100">返回顶部</el-button>
 
 ### 使用方法
 
-```
-htmlCopy Code<el-button v-copy="jack">copy复制文本</el-button>
+```html
+<el-button v-copy="jack">copy复制文本</el-button>
 ```
 
 ### 使用说明
@@ -75,8 +75,8 @@ htmlCopy Code<div v-draggable="dialog">
 
 ### 使用方法
 
-```
-htmlCopy Code<el-button v-debounce="{ fn: handleClick, event: 'click', delay: 200 }">
+```html
+<el-button v-debounce="{ fn: handleClick, event: 'click', delay: 200 }">
   点击试试防抖
 </el-button>
 ```
@@ -98,8 +98,8 @@ htmlCopy Code<el-button v-debounce="{ fn: handleClick, event: 'click', delay: 20
 
 ### 使用方法
 
-```
-htmlCopy Code<el-input style="width: 150px" v-throttle="{ fn: handleInput, event: 'input', delay: 1000 }" v-model="obj.hello" />
+```html
+<el-input style="width: 150px" v-throttle="{ fn: handleInput, event: 'input', delay: 1000 }" v-model="obj.hello" />
 ```
 
 ### 使用说明
@@ -119,8 +119,8 @@ htmlCopy Code<el-input style="width: 150px" v-throttle="{ fn: handleInput, event
 
 ### 使用方法
 
-```
-htmlCopy Code<button @click.stop="showModal">点击显示弹窗(点击其他区域关闭)</button>
+```html
+<button @click.stop="showModal">点击显示弹窗(点击其他区域关闭)</button>
 
 <div class="modal dialog" v-hidePop="{ fn: cancleModal }" v-if="isShowModal">
   我是弹框
@@ -146,8 +146,8 @@ htmlCopy Code<button @click.stop="showModal">点击显示弹窗(点击其他区�
 
 ### 使用方法
 
-```
-htmlCopy Code<template>
+```html
+<template>
   <div class="hello">
     <div ref="fullScreen" style="background: white">
       <p>是否全屏: {{ isFullscreen }}</p>
@@ -193,8 +193,8 @@ const [isFullscreen, { setFull, exitFull, toggle }] = useFullscreen();
 
 ### 使用方法
 
-```
-javascriptCopy Codelet { result } = useList(axios, searchParams);
+```html
+let { result } = useList(axios, searchParams);
 
 <li v-for="(item, index) in result.list" :key="index">{{ item }}</li>
 ```
@@ -214,8 +214,8 @@ javascriptCopy Codelet { result } = useList(axios, searchParams);
 
 ### 使用方法 
 
-```
-htmlCopy Code<button @click="startDownload">下载文件</button>
+```javascript
+<button @click="startDownload">下载文件</button>
 javascriptCopy Codeimport { ref } from "vue";
 import useDownloadFile from "../../hooks/useDownloadFile";
 
@@ -248,7 +248,7 @@ const startDownload = () => {
 
 ### 使用方法
 
-```
+```javascript
 const { numberFormater, moneyFormater } = useFormater();
   <div class="emphasis">日同比 &nbsp;{{numberFormater(salesGrowthLastDay)}}% &nbsp; <span class="decrement"></span></div>
    <div>昨日销售额 <span class="emphasis">{{ moneyFormater(salesLastDay) }}</span></div>
