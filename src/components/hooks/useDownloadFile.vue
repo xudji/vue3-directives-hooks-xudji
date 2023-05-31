@@ -1,6 +1,5 @@
 <template>
   <button @click="startDownload">下载文件</button>
-
 </template>
 
 <script setup>
