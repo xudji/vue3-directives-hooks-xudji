@@ -1,7 +1,9 @@
 <template>
-  <el-button v-debounce="{ fn: handleClick, event: 'click', delay: 200 }">
-    点击试试防抖
-  </el-button>
+  防抖输入框<el-input
+    style="width: 150px"
+    v-debounce="{ fn: handleInput, event: 'input', delay: 200 }"
+    v-model="obj.hello"
+  />
 </template>
 
 <script>
@@ -12,7 +14,11 @@ export default defineComponent({
 </script>
 
 <script setup>
-const handleClick = () => {
-  console.log("防抖点击");
+const obj = reactive({
+  hello: "",
+  world: "",
+});
+const handleInput = () => {
+  console.log("防抖输入框的值：", obj.hello);
 };
 </script>

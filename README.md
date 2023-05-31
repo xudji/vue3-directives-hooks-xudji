@@ -1,4 +1,4 @@
-# vue3自定义指令 by xudji
+# vue3 自定义指令 by xudji
 
 ## 返回顶部指令 v-backtop
 
@@ -83,12 +83,12 @@ htmlCopy Code<div v-draggable="dialog">
 
 ### 使用说明
 
-绑定点击函数和事件，设置延迟时间，实现防抖功能。参数为函数、事件和延迟时间，延迟时间不传默认为200ms。
+绑定点击函数和事件，设置延迟时间，实现防抖功能。参数为函数、事件和延迟时间，延迟时间不传默认为 200ms。
 
 ### 实现逻辑
 
 1. 在 `mounted` 钩子函数中，首先判断传入的参数是否符合要求，即必须有回调函数 `fn` 和监听事件类型 `event`。如果参数不符合要求，就直接返回。
-2. 接着设置默认的延迟时间 `delay` 为200毫秒，并且初始化 `el.timer` 为null。然后定义一个 `handler` 函数来处理事件，该函数会在事件发生时被调用。
+2. 接着设置默认的延迟时间 `delay` 为 200 毫秒，并且初始化 `el.timer` 为 null。然后定义一个 `handler` 函数来处理事件，该函数会在事件发生时被调用。
 3. 在 `handler` 函数中，首先判断 `el.timer` 是否存在，如果存在则使用 `clearTimeout()` 方法清除定时器并将 `el.timer` 重置为 `null`。然后使用 `setTimeout()` 方法设置一个新的定时器，在延迟时间之后执行回调函数 `fn` 并将 `el.timer` 重置为 `null`。
 4. 在设置新的定时器之前，可以通过 `binding.value.delay` 来覆盖默认的延迟时间 `delay`。
 5. 最后，在事件监听事件类型 `event` 上绑定 `handler` 函数。
@@ -99,12 +99,16 @@ htmlCopy Code<div v-draggable="dialog">
 ### 使用方法
 
 ```html
-<el-input style="width: 150px" v-throttle="{ fn: handleInput, event: 'input', delay: 1000 }" v-model="obj.hello" />
+<el-input
+  style="width: 150px"
+  v-throttle="{ fn: handleInput, event: 'input', delay: 1000 }"
+  v-model="obj.hello"
+/>
 ```
 
 ### 使用说明
 
-绑定输入事件函数和事件，设置延迟时间，实现节流功能。参数为函数、事件和延迟时间，延迟时间不传默认为200ms。
+绑定输入事件函数和事件，设置延迟时间，实现节流功能。参数为函数、事件和延迟时间，延迟时间不传默认为 200ms。
 
 ### 实现逻辑
 
@@ -130,7 +134,7 @@ htmlCopy Code<div v-draggable="dialog">
 
 ### 使用说明
 
-需要传入取消的函数，实现了点击元素以外的区域隐藏该元素的功能，什么元素都可以，兼容HTML元素和Element Plus元素及其他模板元素。
+需要传入取消的函数，实现了点击元素以外的区域隐藏该元素的功能，什么元素都可以，兼容 HTML 元素和 Element Plus 元素及其他模板元素。
 
 ### 实现逻辑
 
@@ -142,7 +146,7 @@ htmlCopy Code<div v-draggable="dialog">
 
 # Vue3 自定义 Hooks by xudji
 
-## 全屏  useFullscreen()
+## 全屏 useFullscreen()
 
 ### 使用方法
 
@@ -158,12 +162,11 @@ htmlCopy Code<div v-draggable="dialog">
   </div>
 </template>
 
-
 <script setup>
-import { ref, watch } from "vue";
-import useFullscreen from "../../hooks/fullScreen";
-const fullScreen = ref();
-const [isFullscreen, { setFull, exitFull, toggle }] = useFullscreen();
+  import { ref, watch } from "vue";
+  import useFullscreen from "../../hooks/fullScreen";
+  const fullScreen = ref();
+  const [isFullscreen, { setFull, exitFull, toggle }] = useFullscreen();
 </script>
 ```
 
@@ -189,7 +192,7 @@ const [isFullscreen, { setFull, exitFull, toggle }] = useFullscreen();
 10. 在 `exitFull()` 方法中，同样通过 `isFullscreen.value` 判断是否已经处于退出全屏模式。如果是，则不执行任何操作；否则，调用 `document.exitFullscreen()` 方法请求退出全屏模式，并将 `isFullscreen.value` 设置为 `false`。
 11. 在 `toggle()` 方法中，使用三目运算符判断当前是否处于全屏模式，如果是，则调用 `exitFull()` 方法；否则，调用 `setFull()` 方法。
 
-## 分页  useList()
+## 分页 useList()
 
 ### 使用方法
 
@@ -210,9 +213,9 @@ let { result } = useList(axios, searchParams);
 3. 使用 `watchEffect` 函数，监听 `params` 的变化，并在 `params` 改变时自动重新获取数据。
 4. 最后，返回一个对象，包含 `result` 属性，其值为定义的 `result` 对象。
 
-## 下载  useDownloadFile()
+## 下载 useDownloadFile()
 
-### 使用方法 
+### 使用方法
 
 ```javascript
 <button @click="startDownload">下载文件</button>
@@ -244,7 +247,24 @@ const startDownload = () => {
 3. 实现 `downloadFile` 函数，该函数的作用是下载文件。首先判断是否正在进行中的下载请求或者需要下载的文件没有地址或文件名，如果是则直接返回。之后设置 `downloading` 为 `true`，使得在下载过程中无法再次触发下载请求。如果需要下载的文件是通过 HTTP 访问的，则将其地址中的 "http" 转换为 "https"。然后创建一个进度条 `ref` 对象 `progress`，用于在下载过程中更新下载进度。从 URL 中获取文件类型并赋值给 `fileType` 变量。接着，创建 XMLHttpRequest 请求，并设置响应类型为 blob 类型。然后使用 `open` 方法以 GET 方式打开地址，并设置异步。接下来通过设置 `onprogress` 回调函数，将当前下载进度除以总大小所得百分比值更新到 `progress.value`。在下载完成时，将下载进度条的提示消息从页面中移除，并执行下载文件的操作，然后取出对象 URL 并释放掉，最后设置 `downloading` 为 `false`，提示用户文件已下载完成。若在下载过程中发生异常，则输出异常信息，设置 `downloading` 为 `false`，并提示用户下载发生异常，请重试。
 4. 最后，将 `downloadFile` 函数作为对象的属性返回。
 
-## 格式化数字  useFormatter()
+### 补充说明
+
+方法 操作原理 优点 缺点
+form 表单 动态生成一个表单，利用表单提交的功能来实现文件的下载 兼容性好，不会出现 URL 长度限制问题 无法知道下载的进度，用户体验交互差
+无法直接下载浏览器可直接预览的文件类型
+window.open / location.href 打开新标签页访问下载资源 简单粗暴 会出现 URL 长度限制问题
+无法知道下载的进度，用户体验交互差
+无法直接下载浏览器可直接预览的文件类型
+需要注意 url 编码问题
+不能添加 header，也就不能进行鉴权
+<a /> download 属性 利用 a 标签原生访问属性，附加新增的 download 属性，使用浏览器进行下载 简单粗暴且可下载正常预览文件 不能下载跨域地址文件
+IE/Edge 内兼容问题
+无法鉴权
+Blob 对象 发请求获取二进制数据，转化为 Blob 对象，利用 URL.createObjectUrl 生成 url 地址，赋值在 a 标签的 href 属性上，结合 download 进行下载 能解决不能直接下载浏览器可浏览的文件
+可以鉴权 IE10 以下不可用
+Safari 使用情况可能有问题
+
+## 格式化数字 useFormatter()
 
 ### 使用方法
 
