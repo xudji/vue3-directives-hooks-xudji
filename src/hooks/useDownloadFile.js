@@ -61,7 +61,11 @@ export default function useDownloadFile() {
                 type: 'info',
                 iconClass: 'el-icon-download',
                 duration: 0,
+                style: {
+                    width: '300px', // 设置宽度
+                  },
                 showClose: true,
+               
             });
         } catch (e) {
             console.error(e);
