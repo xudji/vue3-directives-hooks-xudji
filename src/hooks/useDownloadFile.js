@@ -6,7 +6,7 @@ export default function useDownloadFile() {
     let downloading = false; // 限制同一文件同时触发多次下载
     // xhr.abort() 被用于确保在组件卸载时，下载操作能够被正确地中止，并释放资源。如果不调用 xhr.abort() 方法，在组件卸载时，由于下载操作尚未完成，可能会出现一些不可预知的异常或内存泄漏问题。如切换页面
     onBeforeUnmount(() => {
-        xhr && xhr.abort();
+        xhr && xhr.abort(); // 并且逻辑运算符
     });
     const downloadFile = options => {
         try {
@@ -20,28 +20,38 @@ export default function useDownloadFile() {
             const fileType = options.url.split('.').pop();
             xhr = new XMLHttpRequest();
             xhr.responseType = 'blob';
-            xhr.open('get', options.url, true);
-            // xhr.onprogress事件属性 用于监听 HTTP 请求的下载进度
+            // open 方法用于初始化一个请求
+            xhr.open('get', options.url, true); 
+            // xhr.onprogress事件属性 用于监听 HTTP 请求的下载进度，e 获取到当前上传或下载的进度信息
             xhr.onprogress = function (e) {
                 progress.value = Math.floor((e.loaded / e.total) * 100);
             };
             // e 是由浏览器自动创建并传递给 xhr.onprogress 和 xhr.onloadend 方法的事件对象
             xhr.onloadend = function (e) {
                 if (e.target.status === 200 || e.target.status === 304) {
-                    // 创建一个 <a> 元素，并使用 window.URL.createObjectURL() 方法创建一个 URL 对象 url。将 url 设置为 <a> 元素的 href 属性，值为二进制数据 blob。
+                    // 创建一个 <a> 元素
                     const aElement = document.createElement('a');
                     // 而使用 Blob 下载，则可以自定义文件名和文件类型，避免因为 URL 命名不规范或格式错误导致的下载问题。
                     const blob = e.target.response;
-                    // 生成的 URL 类似于 "blob:http://example.com/32a6e601-e9ea-4d9c-bf42-6597c21b1eb6"，其中包含了协议、域名和一个 UUID 作为其唯一标识符，用于指向内存中的文件对象。URL用于指向文件数据在内存中的位置。通过这个 URL，我们可以在 Web 应用中访问和处理文件数据
+                   
+                    // 并使用 window.URL.createObjectURL() 方法创建一个 URL 对象 url。
+
+                    //  生成的 URL 类似于 "blob:http://example.com/32a6e601-e9ea-4d9c-bf42-6597c21b1eb6"，其中包含了协议、域名和一个 UUID 作为其唯一标识符，用于指向内存中的文件对象。URL用于指向文件数据在内存中的位置。通过这个 URL，我们可以在 Web 应用中访问和处理文件数据
                     const url = window.URL.createObjectURL(blob);
                     aElement.style.display = 'none';
+                    // 将 url 设置为 <a> 元素的 href 属性，值为二进制数据 blob。浏览器的默认行为，即当点击带有 href 属性的链接时，会根据该 href 属性的值自动发起对应 URL 的请求
                     aElement.href = url;
+                    // 指定用户下载文件时默认的文件名
                     aElement.download = `${options.fileName}.${fileType}`;
                     document.body.appendChild(aElement);
                     aElement.click(); 
-                    // 释放资源，手动销毁已经生成的 URL 对象，不然可能会造成过多的内存开销，从而导致程序的运行速度明显变慢或崩溃
+                    // 释放对象所占用的内存，手动销毁已经生成的 URL 对象，不然可能会造成过多的内存开销，从而导致程序的运行速度明显变慢或崩溃
+
+                    // 是否支持标准的 URL 对象接口
                     if (window.URL) {
+                        // 释放内存
                         window.URL.revokeObjectURL(url);
+                        // 旧版的接口中
                     } else {
                         window.webkitURL.revokeObjectURL(url);
                     }

@@ -242,6 +242,8 @@ const startDownload = () => {
 
 ### 实现逻辑
 
+使用 Blob 对象进行封装下载文件方法
+
 1. 在 hook 中定义两个变量：`xhr` 和 `downloading`。其中，`xhr` 是用来发送 XMLHttpRequest 请求的对象，`downloading` 用来限制同一文件同时触发多次下载。
 2. 使用 `onBeforeUnmount` 钩子函数，在组件销毁前取消正在进行中的下载请求。
 3. 实现 `downloadFile` 函数，该函数的作用是下载文件。首先判断是否正在进行中的下载请求或者需要下载的文件没有地址或文件名，如果是则直接返回。之后设置 `downloading` 为 `true`，使得在下载过程中无法再次触发下载请求。如果需要下载的文件是通过 HTTP 访问的，则将其地址中的 "http" 转换为 "https"。然后创建一个进度条 `ref` 对象 `progress`，用于在下载过程中更新下载进度。从 URL 中获取文件类型并赋值给 `fileType` 变量。接着，创建 XMLHttpRequest 请求，并设置响应类型为 blob 类型。然后使用 `open` 方法以 GET 方式打开地址，并设置异步。接下来通过设置 `onprogress` 回调函数，将当前下载进度除以总大小所得百分比值更新到 `progress.value`。在下载完成时，将下载进度条的提示消息从页面中移除，并执行下载文件的操作，然后取出对象 URL 并释放掉，最后设置 `downloading` 为 `false`，提示用户文件已下载完成。若在下载过程中发生异常，则输出异常信息，设置 `downloading` 为 `false`，并提示用户下载发生异常，请重试。
@@ -258,7 +260,7 @@ const startDownload = () => {
 无法直接下载浏览器可直接预览的文件类型，直接就预览打开了像 pdf、jpg、png 文件
 需要注意 url 编码问题
 不能添加 header，也就不能进行鉴权
-**a  download** 属性 利用 a 标签原生访问属性，附加新增的 download 属性，使用浏览器进行下载 简单粗暴且可下载正常预览文件 不能下载跨域地址文件
+**a download** 属性 利用 a 标签原生访问属性，附加新增的 download 属性，使用浏览器进行下载 简单粗暴且可下载正常预览文件 不能下载跨域地址文件
 IE/Edge 内兼容问题
 无法鉴权
 **Blob 对象** 发请求获取二进制数据，转化为 Blob 对象，利用 URL.createObjectUrl 生成 url 地址，赋值在 a 标签的 href 属性上，结合 download 进行下载 能解决不能直接下载浏览器可浏览的文件
