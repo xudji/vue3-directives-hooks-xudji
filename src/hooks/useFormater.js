@@ -25,3 +25,5 @@ function formaterNumber(value) {
       moneyFormater
     }
   }
+
+  
